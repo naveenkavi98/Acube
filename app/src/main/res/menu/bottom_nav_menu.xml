@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/app_logo"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/navigation_series"
+        android:icon="@drawable/app_logo"
+        android:title="Movies" />
+
+    <item
+        android:id="@+id/navigation_clips"
+        android:icon="@drawable/app_logo"
+        android:title="Album" />
+    <item
+        android:id="@+id/navigation_more"
+        android:icon="@drawable/app_logo"
+        android:title="More" />
+
+</menu>

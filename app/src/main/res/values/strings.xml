@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Acube</string>
+    <string name="enter">Enter</string>
+    <string name="enter_your_mobile_number">enter your mobile number</string>
+    <string name="sign_in_sign_up">Sign In/Sign Up</string>
+    <string name="image">image</string>
+    <string name="welcome_user">welcome user</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
