@@ -15,7 +15,7 @@ class SplashActivity : AppCompatActivity() {
     private fun navigate() {
         val handler = Handler()
         handler.postDelayed(Runnable {
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }, 3000)
     }

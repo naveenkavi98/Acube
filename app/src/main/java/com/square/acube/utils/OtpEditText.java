@@ -12,7 +12,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 
 import com.square.acube.R;
 
-public class OTPComponent extends AppCompatEditText {
+public class OtpEditText extends AppCompatEditText {
     private float mSpace = 24; //24 dp by default, space between the lines
     private float mNumChars = 6;
     private float mLineSpacing = 8; //8dp by default, height of the text from our lines
@@ -21,19 +21,16 @@ public class OTPComponent extends AppCompatEditText {
     private Paint mLinesPaint;
     private OnClickListener mClickListener;
 
-    private OnOtpCompleted onOtpCompleted;
-    public String sentText = "";
-
-    public OTPComponent(Context context) {
+    public OtpEditText(Context context) {
         super(context);
     }
 
-    public OTPComponent(Context context, AttributeSet attrs) {
+    public OtpEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public OTPComponent(Context context, AttributeSet attrs, int defStyleAttr) {
+    public OtpEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -42,7 +39,6 @@ public class OTPComponent extends AppCompatEditText {
         float multi = context.getResources().getDisplayMetrics().density;
         mLineStroke = multi * mLineStroke;
         mLinesPaint = new Paint(getPaint());
-        mLinesPaint.setStyle(Paint.Style.STROKE);
         mLinesPaint.setStrokeWidth(mLineStroke);
         mLinesPaint.setColor(getResources().getColor(R.color.green));
         setBackgroundResource(0);
@@ -91,14 +87,8 @@ public class OTPComponent extends AppCompatEditText {
         float[] textWidths = new float[textLength];
         getPaint().getTextWidths(getText(), 0, textLength, textWidths);
 
-        if (textLength == 6 && onOtpCompleted != null && !sentText.equals(getText().toString())) {
-            onOtpCompleted.getOtp(getText().toString());
-            sentText = getText().toString();
-        }
-        setSelection(getText().length());
-
         for (int i = 0; i < mNumChars; i++) {
-            canvas.drawRect(startX, bottom - 80, startX + mCharSize, bottom, mLinesPaint);
+            canvas.drawLine(startX, bottom, startX + mCharSize, bottom, mLinesPaint);
             if (getText().length() > i) {
                 float middle = startX + mCharSize / 2;
                 canvas.drawText(text, i, i + 1, middle - textWidths[0] / 2, bottom - mLineSpacing, getPaint());
@@ -109,13 +99,5 @@ public class OTPComponent extends AppCompatEditText {
                 startX += mCharSize + mSpace;
             }
         }
-    }
-
-    public void setOnOtpCompleted(OnOtpCompleted onOtpCompleted) {
-        this.onOtpCompleted = onOtpCompleted;
-    }
-
-    public interface OnOtpCompleted {
-        public void getOtp(String otp);
     }
 }

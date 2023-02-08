@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools = "http://schemas.android.com/tools"
+    tools:showIn= "navigation_view">
+    <item
+        android:id="@+id/navigation_recently_watched"
+        android:icon="@drawable/icn_recenty"
+        android:title="@string/recently_watched" />
+    <item
+        android:id="@+id/navigation_watch_later"
+        android:icon="@drawable/icn_watch_later"
+        android:title="@string/watch_later" />
+    <item
+        android:id="@+id/navigation_membership"
+        android:icon="@drawable/icn_membership"
+        android:title="@string/membership" />
+    <item
+        android:id="@+id/navigation_help_and_support"
+        android:icon="@drawable/icn_help"
+        android:title="@string/help_amp_support" />
+    <item
+        android:id="@+id/navigation_terms"
+        android:icon="@drawable/icn_terms"
+        android:title="@string/terms" />
+    <item
+        android:id="@+id/navigation_privacy_and_policy"
+        android:icon="@drawable/icn_terms"
+        android:title="@string/privacy_amp_policy" />
+    <item
+        android:id="@+id/navigation_disclaimer"
+        android:icon="@drawable/icn_terms"
+        android:title="@string/disclaimer" />
+    <item
+        android:id="@+id/navigation_refund_and_cancellation"
+        android:icon="@drawable/icn_terms"
+        android:title="@string/refund_amp_cancellation" />
+    <item
+        android:id="@+id/navigation_shipping_and_delivery"
+        android:icon="@drawable/icn_terms"
+        android:title="@string/shipping_amp_delivery" />
+    <item
+        android:id="@+id/navigation_version"
+        android:title="" />
 </menu>
