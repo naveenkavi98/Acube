@@ -18,146 +18,80 @@
             android:layout_height="wrap_content"
             tools:context=".DetailsActivity">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/green"
+            >
+
             <ImageView
                 android:id="@+id/backButton"
-                android:layout_width="15dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_margin="15dp"
                 android:elevation="5dp"
                 android:src="@drawable/icn_arrow_left"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <ImageView
-                android:id="@+id/mainImage"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/main_card"
                 android:layout_width="match_parent"
-                android:layout_height="410dp"
-                android:foreground="@drawable/gradient"
-                android:scaleType="centerCrop"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="300dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="5dp"
+                android:backgroundTint="@color/white"
+                android:elevation="5dp"
+                app:layout_constraintTop_toBottomOf="@id/action_bar">
 
-            <ImageView
-                android:id="@+id/play"
-                android:layout_width="51dp"
-                android:layout_height="51dp"
-                android:src="@drawable/icn_play"
-                app:layout_constraintBottom_toBottomOf="@+id/mainImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/mainImage" />
 
-            <TextView
-                android:id="@+id/textComingSoon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ComingSoon"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/mainImage"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/mainImage" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
 
-            <View
-                android:id="@+id/favoriteButton"
-                android:layout_width="24dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="18dp"
-                android:layout_marginBottom="29dp"
-                app:layout_constraintBottom_toBottomOf="@+id/mainImage"
-                app:layout_constraintEnd_toEndOf="@id/mainImage" />
+                    <ImageView
+                        android:id="@+id/mainImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        />
 
-            <ImageView
-                android:id="@+id/addFavoriteButton"
-                android:layout_width="24dp"
-                android:layout_height="30dp"
-                android:src="@drawable/icn_favorite"
-                app:layout_constraintTop_toTopOf="@id/favoriteButton"
-                app:layout_constraintStart_toStartOf="@id/favoriteButton"
-                app:layout_constraintBottom_toBottomOf="@+id/favoriteButton"
-                app:layout_constraintEnd_toEndOf="@id/favoriteButton" />
+                    <ImageView
+                        android:id="@+id/play"
+                        android:layout_width="51dp"
+                        android:layout_height="49dp"
+                        android:src="@drawable/icn_play"
+                        app:layout_constraintBottom_toBottomOf="@+id/mainImage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/mainImage"
+                        app:tint="@color/green" />
 
-            <ImageView
-                android:id="@+id/removeFavoriteButton"
-                android:layout_width="24dp"
-                android:layout_height="30dp"
-                android:src="@drawable/icn_favourite_red"
-                android:visibility="invisible"
-                app:layout_constraintTop_toTopOf="@id/favoriteButton"
-                app:layout_constraintStart_toStartOf="@id/favoriteButton"
-                app:layout_constraintBottom_toBottomOf="@+id/favoriteButton"
-                app:layout_constraintEnd_toEndOf="@id/favoriteButton" />
+                    <TextView
+                        android:id="@+id/textComingSoon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"
+                        android:text=" Watch now @ Just Rs.99/- "
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:visibility="visible"
+                        android:background="@drawable/watch_now_bg"
+                        app:layout_constraintBottom_toBottomOf="@+id/mainImage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
 
-            <ImageView
-                android:id="@+id/share"
-                android:layout_width="24dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="29dp"
-                android:src="@drawable/icn_share"
-                app:layout_constraintBottom_toBottomOf="@+id/mainImage"
-                app:layout_constraintEnd_toStartOf="@id/favoriteButton" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/genre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="29dp"
-                android:background="@drawable/pill"
-                android:backgroundTint="@color/light_plum"
-                android:paddingHorizontal="13dp"
-                android:paddingVertical="5dp"
-                android:textColor="@color/plum"
-                app:layout_constraintBottom_toBottomOf="@id/mainImage"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="29dp"
-                android:background="@drawable/pill"
-                android:backgroundTint="@color/light_plum"
-                android:paddingHorizontal="13dp"
-                android:paddingVertical="5dp"
-                android:text="16+"
-                android:textColor="@color/plum"
-                app:layout_constraintBottom_toBottomOf="@id/mainImage"
-                app:layout_constraintStart_toEndOf="@+id/genre" />
-
-            <TextView
-                android:id="@+id/imdb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="29dp"
-                android:background="@drawable/pill"
-                android:backgroundTint="@color/yellow"
-                android:paddingHorizontal="13dp"
-                android:paddingVertical="5dp"
-                android:text="IMDB 8.5"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@id/mainImage"
-                app:layout_constraintStart_toEndOf="@+id/age" />
-
-            <TextView
-                android:id="@+id/certificate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="29dp"
-                android:background="@drawable/pill"
-                android:backgroundTint="@color/light_plum"
-                android:paddingHorizontal="13dp"
-                android:paddingVertical="5dp"
-                android:text=""
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@id/mainImage"
-                app:layout_constraintStart_toEndOf="@+id/imdb" />
-
+            </androidx.cardview.widget.CardView>
 
             <!--<TextView
                 android:id="@+id/title"
@@ -177,64 +111,99 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mainImage"
+                app:layout_constraintTop_toBottomOf="@id/main_card"
                 >
-                <TextView
-                    android:id="@+id/plotLabel"
-                    android:layout_width="wrap_content"
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cons_plot"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="The Plot"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintStart_toStartOf="@id/layout"
-                    app:layout_constraintTop_toTopOf="@+id/layout"
+                    app:layout_constraintTop_toTopOf="@+id/layout">
+
+                    <TextView
+                        android:id="@+id/plotLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="The Plot"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+
+                    <TextView
+                        android:id="@+id/genre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="11sp"
+                        android:textStyle="normal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/plotLabel"
+                        />
+
+                    <!--<RatingBar
+                        android:id="@+id/rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:numStars="5"
+                        android:stepSize="4.5"
+                        android:isIndicator="true"
+                        app:layout_constraintTop_toTopOf="@id/genre"
+                        app:layout_constraintBottom_toBottomOf="@id/genre"
+                        app:layout_constraintStart_toEndOf="@id/genre"
+                        />-->
+
+                    <ImageView
+                        android:id="@+id/watch_later"
+                        android:layout_width="24dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/icn_recently"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/share"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:tint="@color/green" />
+
+                    <ImageView
+                        android:id="@+id/share"
+                        android:layout_width="24dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/icn_share"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:tint="@color/green" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/film_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Film Info"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cons_plot"
                     />
-
-                <TextView
-                    android:id="@+id/plotValue"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="11sp"
-                    android:textColor="@color/black"
-                    android:textSize="11sp"
-                    android:textStyle="normal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/plotLabel" />
-
-                <TextView
-                    android:id="@+id/languageLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Language :"
-                    android:textColor="@color/black"
-                    android:textSize="11sp"
-                    android:textStyle="normal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/plotValue" />
-
-                <TextView
-                    android:id="@+id/languageValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textSize="11sp"
-                    android:textStyle="normal"
-                    app:layout_constraintStart_toEndOf="@+id/languageLabel"
-                    app:layout_constraintTop_toBottomOf="@id/plotValue" />
 
                 <TextView
                     android:id="@+id/castLabel"
@@ -243,18 +212,18 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Cast"
+                    android:text="Cast :"
                     android:textColor="@color/black"
                     android:textSize="11sp"
                     android:textStyle="normal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/languageLabel" />
+                    app:layout_constraintTop_toBottomOf="@id/film_info" />
 
                 <TextView
                     android:id="@+id/castValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
                     android:text=""
@@ -262,7 +231,7 @@
                     android:textSize="11sp"
                     android:textStyle="normal"
                     app:layout_constraintStart_toEndOf="@+id/castLabel"
-                    app:layout_constraintTop_toBottomOf="@id/languageLabel" />
+                    app:layout_constraintTop_toBottomOf="@id/film_info" />
                 <TextView
                     android:id="@+id/directorLabel"
                     android:layout_width="wrap_content"
@@ -281,7 +250,7 @@
                     android:id="@+id/directorValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
                     android:textColor="@color/black"
@@ -297,7 +266,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Produced :"
+                    android:text="Produced By :"
                     android:textColor="@color/black"
                     android:textSize="11sp"
                     android:textStyle="normal"
@@ -308,7 +277,7 @@
                     android:id="@+id/producedValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
                     android:textColor="@color/black"
@@ -317,6 +286,60 @@
                     app:layout_constraintStart_toEndOf="@+id/producedLabel"
                     app:layout_constraintTop_toBottomOf="@+id/directorLabel" />
 
+                <TextView
+                    android:id="@+id/certificationLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Certification :"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/producedLabel" />
+
+                <TextView
+                    android:id="@+id/certificationValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toEndOf="@+id/certificationLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/producedLabel" />
+
+
+                <TextView
+                    android:id="@+id/languageLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="language :"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/certificationLabel" />
+
+                <TextView
+                    android:id="@+id/languageValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toEndOf="@+id/languageLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/certificationLabel" />
 
 
                 <TextView
@@ -331,13 +354,13 @@
                     android:textSize="11sp"
                     android:textStyle="normal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/producedLabel" />
+                    app:layout_constraintTop_toBottomOf="@id/languageLabel" />
 
                 <TextView
                     android:id="@+id/musicDirecterValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
                     android:text=""
@@ -345,7 +368,7 @@
                     android:textSize="11sp"
                     android:textStyle="normal"
                     app:layout_constraintStart_toEndOf="@+id/musicDirecterLabel"
-                    app:layout_constraintTop_toBottomOf="@id/producedLabel"/>
+                    app:layout_constraintTop_toBottomOf="@id/languageLabel"/>
 
                 <TextView
                     android:id="@+id/dateOfReleaseLabel"
@@ -365,7 +388,7 @@
                     android:id="@+id/dateOfReleaseValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
                     android:text=""
@@ -375,15 +398,30 @@
                     app:layout_constraintStart_toEndOf="@+id/dateOfReleaseLabel"
                     app:layout_constraintTop_toBottomOf="@id/musicDirecterLabel"/>
 
+                <TextView
+                    android:id="@+id/plotValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:lineSpacingExtra="11sp"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dateOfReleaseLabel" />
+
                 <View
                     android:id="@+id/separator"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
                     android:layout_margin="15dp"
-                    android:background="#ffffff"
+                    android:background="@color/green"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dateOfReleaseLabel" />
+                    app:layout_constraintTop_toBottomOf="@+id/plotValue" />
 
                 <TextView
                     android:id="@+id/relatedLabel"

@@ -3,21 +3,26 @@
 
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/app_logo"
+        android:icon="@drawable/icn_home"
         android:title="Home" />
 
     <item
         android:id="@+id/nav_movies"
-        android:icon="@drawable/app_logo"
+        android:icon="@drawable/ic_play_arrow"
         android:title="Movies" />
 
     <item
-        android:id="@+id/nav_clips"
+        android:id="@+id/nav_plus"
         android:icon="@drawable/app_logo"
-        android:title="Album" />
+        android:title="A Cube +" />
+
     <item
-        android:id="@+id/nav_more"
-        android:icon="@drawable/app_logo"
-        android:title="More" />
+        android:id="@+id/nav_clips"
+        android:icon="@drawable/icn_smart_display"
+        android:title="Trailer" />
+    <item
+        android:id="@+id/nav_songs"
+        android:icon="@drawable/icn_music"
+        android:title="Songs" />
 
 </menu>

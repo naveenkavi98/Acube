@@ -5,23 +5,24 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.interfaces.ItemClickListener
-import com.denzcoskun.imageslider.models.SlideModel
-import com.ott.ottapp.adapter.CategoryAdapter
-import com.square.acube.CategoryActivity
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.square.acube.DetailsActivity
 import com.square.acube.R
 import com.square.acube.ViewAllActivity
 import com.square.acube.adapter.HomeRecentlyWatchedAdapter
+import com.square.acube.adapter.ImageAdapter
 import com.square.acube.adapter.SectionsAdapter
 import com.square.acube.databinding.FragmentBottomHomeBinding
 import com.square.acube.model.dashboard.DashboardResponse
@@ -29,10 +30,9 @@ import com.square.acube.model.dashboard.Recently
 import com.square.acube.model.dashboard.Section
 import com.square.acube.network.HeaderModel
 import com.square.acube.network.ResponseCallback
-import com.square.acube.network.RestConstants
 import com.square.acube.network.RestController
 import com.square.acube.utils.Constants
-import retrofit2.Response.error
+
 
 class BottomHomeFragment : Fragment() {
 
@@ -46,6 +46,9 @@ class BottomHomeFragment : Fragment() {
     private lateinit var doneImage: ImageView
     private lateinit var yesButton: TextView
     private lateinit var noButton: TextView
+    private lateinit var handler : Handler
+    private lateinit var imageList:ArrayList<String>
+    private lateinit var adapter: ImageAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,13 +61,21 @@ class BottomHomeFragment : Fragment() {
             requireContext().getSharedPreferences("TOKEN_KEY", Context.MODE_PRIVATE)
         userID = sharedPreferences.getString("TOKEN_KEY", "").toString()
 
-        /*imageList.add(SlideModel("https://bit.ly/37Rn50u", ScaleTypes.CENTER_CROP))
+       /* val imageList = ArrayList<SlideModel>()
+        imageList.add(SlideModel("https://bit.ly/37Rn50u", ScaleTypes.CENTER_CROP))
         imageList.add(SlideModel("https://bit.ly/2BteuF2", ScaleTypes.CENTER_CROP))
         imageList.add(SlideModel("https://bit.ly/3fLJf72", ScaleTypes.CENTER_CROP))
         imageList.add(SlideModel("https://bit.ly/37Rn50u", ScaleTypes.CENTER_CROP))
         imageList.add(SlideModel("https://bit.ly/2BteuF2", ScaleTypes.CENTER_CROP))
-        imageList.add(SlideModel("https://bit.ly/3fLJf72", ScaleTypes.CENTER_CROP))
-        binding!!.imageSlider.setImageList(imageList)*/
+        imageList.add(SlideModel("https://bit.ly/3fLJf72", ScaleTypes.CENTER_CROP))*/
+        handler = Handler(Looper.myLooper()!!)
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                handler.removeCallbacks(runnable)
+                handler.postDelayed(runnable , 2000)
+            }
+        })
         dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.progress_layout)
@@ -98,7 +109,7 @@ class BottomHomeFragment : Fragment() {
                 Log.e("getDashboard: ", response.toString())
                 val banner = response.banner
                 var sections: ArrayList<Section> = ArrayList()
-                val imageList = ArrayList<SlideModel>()
+                /*var imageList = ArrayList<SlideModel>()
                 response.banner.forEach {
                     imageList.add(
                         SlideModel(
@@ -114,7 +125,22 @@ class BottomHomeFragment : Fragment() {
                         intent.putExtra(Constants.ID, banner[position].videoid)
                         startActivity(intent)
                     }
-                })
+                })*/
+
+                adapter = ImageAdapter(requireContext(),response.banner,  binding.viewPager)
+                binding.viewPager.adapter = adapter
+                binding.viewPager.offscreenPageLimit = 3
+                binding.viewPager.clipToPadding = false
+                binding.viewPager.clipChildren = false
+                binding.viewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_ALWAYS
+                val transformer = CompositePageTransformer()
+                transformer.addTransformer(MarginPageTransformer(40))
+                /*transformer.addTransformer { page, position ->
+                    val r = 1 - abs(position)
+                    page.scaleY = 0.85f + r * 0.14f
+                }*/
+                binding.viewPager.setPageTransformer(transformer)
+
                 sections.addAll(response.section)
                 val sectionsRcv: RecyclerView = binding.sectionsRcv
                 var sectionsAdapter = SectionsAdapter(context, sections)
@@ -132,16 +158,17 @@ class BottomHomeFragment : Fragment() {
                 sectionsRcv.layoutManager = LinearLayoutManager(context)
                 sectionsRcv.adapter = sectionsAdapter
 
-                val categoryRcv: RecyclerView = binding.categoryRcv
+                /*val categoryRcv: RecyclerView = binding.categoryRcv
                 var categoryAdapter = CategoryAdapter(context, response.categorytop)
                 categoryAdapter.onItemClick = { position ->
                     val intent = Intent(activity, CategoryActivity::class.java)
                     intent.putExtra(Constants.ID, response.categorytop[position].id)
                     startActivity(intent)
                 }
-                categoryRcv.adapter = categoryAdapter
+                categoryRcv.adapter = categoryAdapter*/
                 val recent: ArrayList<Recently> = response.recently
                 if (recent.isNotEmpty()) {
+                    binding.textRecent.visibility = View.VISIBLE
                     var favouriteAdapter = HomeRecentlyWatchedAdapter(context!!, recent)
                     favouriteAdapter.onItemClick = { videoPosition ->
                         val intent = Intent(requireContext(), DetailsActivity::class.java)
@@ -181,4 +208,19 @@ class BottomHomeFragment : Fragment() {
         }, phoneno)
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        handler.removeCallbacks(runnable)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        handler.postDelayed(runnable , 2000)
+    }
+
+    private val runnable = Runnable {
+        binding.viewPager.currentItem =  binding.viewPager.currentItem + 1
+    }
 }

@@ -3,6 +3,8 @@ package com.square.acube.fragment
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -11,12 +13,17 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.square.acube.DetailsActivity
 import com.square.acube.R
 import com.square.acube.ViewAllActivity
+import com.square.acube.adapter.ImageAdapter
+import com.square.acube.adapter.MovieImageAdapter
 import com.square.acube.adapter.SectionsAdapter
 import com.square.acube.databinding.FragmentBottomAlbumBinding
 import com.square.acube.model.category.CategoryResponse
@@ -38,6 +45,9 @@ class BottomAlbumFragment : Fragment() {
     private lateinit var doneImage: ImageView
     private lateinit var yesButton: TextView
     private lateinit var noButton: TextView
+    private lateinit var handler : Handler
+    private lateinit var imageList:ArrayList<String>
+    private lateinit var adapter: MovieImageAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +56,15 @@ class BottomAlbumFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentBottomAlbumBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        handler = Handler(Looper.myLooper()!!)
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                handler.removeCallbacks(runnable)
+                handler.postDelayed(runnable , 2000)
+            }
+        })
 
         dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -63,8 +82,8 @@ class BottomAlbumFragment : Fragment() {
         dialog.window!!.setBackgroundDrawableResource(R.color.trans)
         dialog.window!!.attributes= layoutParams
 
-        binding.refreshLayout.setOnRefreshListener { getCategory("7") }
-        getCategory("7")
+        binding.refreshLayout.setOnRefreshListener { getCategory("5") }
+        getCategory("5")
         return root
     }
 
@@ -77,7 +96,7 @@ class BottomAlbumFragment : Fragment() {
                 Log.e("\n\n\n\n\nonResponse: ", response.toString())
                 val banner =response.banner
                 var sections: ArrayList<Section> = ArrayList();
-                val imageList = ArrayList<SlideModel>()
+                /*val imageList = ArrayList<SlideModel>()
                 sections.addAll(response.section)
                 response.banner.forEach {
                     imageList.add(SlideModel(RestConstants.BANNER_PATH+it.image,  ScaleTypes.CENTER_CROP))
@@ -89,7 +108,21 @@ class BottomAlbumFragment : Fragment() {
                         intent.putExtra(Constants.ID, banner[position].videoid)
                         startActivity(intent)
                     }
-                })
+                })*/
+                adapter = MovieImageAdapter(requireContext(),response.banner,  binding.viewPager)
+                binding.viewPager.adapter = adapter
+                binding.viewPager.offscreenPageLimit = 3
+                binding.viewPager.clipToPadding = false
+                binding.viewPager.clipChildren = false
+                binding.viewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_ALWAYS
+                val transformer = CompositePageTransformer()
+                transformer.addTransformer(MarginPageTransformer(40))
+                /*transformer.addTransformer { page, position ->
+                    val r = 1 - abs(position)
+                    page.scaleY = 0.85f + r * 0.14f
+                }*/
+                binding.viewPager.setPageTransformer(transformer)
+
                 val sectionsRcv: RecyclerView = binding.sectionsRcv
                 var sectionsAdapter = SectionsAdapter(context, sections)
                 sectionsAdapter.onItemClick = { position, videoPosition ->
@@ -125,6 +158,22 @@ class BottomAlbumFragment : Fragment() {
                 }
             }
         },id)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        handler.removeCallbacks(runnable)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        handler.postDelayed(runnable , 2000)
+    }
+
+    private val runnable = Runnable {
+        binding.viewPager.currentItem =  binding.viewPager.currentItem + 1
     }
 
 }

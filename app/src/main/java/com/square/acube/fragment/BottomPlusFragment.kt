@@ -1,9 +1,7 @@
 package com.square.acube.fragment
 
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,7 +11,6 @@ import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -22,18 +19,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
-import com.square.acube.CategoryActivity
 import com.square.acube.DetailsActivity
 import com.square.acube.R
 import com.square.acube.ViewAllActivity
 import com.square.acube.adapter.ImageAdapter
-import com.square.acube.adapter.MoreAdapter
 import com.square.acube.adapter.MovieImageAdapter
 import com.square.acube.adapter.SectionsAdapter
-import com.square.acube.databinding.FragmentBottomMoreBinding
-import com.square.acube.databinding.FragmentBottomMoviesBinding
+import com.square.acube.databinding.FragmentBottomPlusBinding
 import com.square.acube.model.category.CategoryResponse
-import com.square.acube.model.dashboard.DashboardResponse
 import com.square.acube.model.dashboard.Section
 import com.square.acube.network.HeaderModel
 import com.square.acube.network.ResponseCallback
@@ -42,9 +35,9 @@ import com.square.acube.network.RestController
 import com.square.acube.utils.Constants
 
 
-class BottomMoreFragment : Fragment() {
+class BottomPlusFragment : Fragment() {
 
-    private lateinit var binding: FragmentBottomMoviesBinding
+    private lateinit var binding: FragmentBottomPlusBinding
     private lateinit var dialog: Dialog
     private lateinit var subTitle: TextView
     private lateinit var loadTitle: TextView
@@ -62,7 +55,7 @@ class BottomMoreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentBottomMoviesBinding.inflate(inflater, container, false)
+        binding = FragmentBottomPlusBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         handler = Handler(Looper.myLooper()!!)
@@ -90,8 +83,8 @@ class BottomMoreFragment : Fragment() {
         dialog.window!!.setBackgroundDrawableResource(R.color.trans)
         dialog.window!!.attributes= layoutParams
 
-        binding.refreshLayout.setOnRefreshListener { getCategory("4") }
-        getCategory("4")
+        binding.refreshLayout.setOnRefreshListener { getCategory("3") }
+        getCategory("3")
         return root
     }
 
@@ -130,7 +123,6 @@ class BottomMoreFragment : Fragment() {
                     page.scaleY = 0.85f + r * 0.14f
                 }*/
                 binding.viewPager.setPageTransformer(transformer)
-
                 val sectionsRcv: RecyclerView = binding.sectionsRcv
                 var sectionsAdapter = SectionsAdapter(context, sections)
                 sectionsAdapter.onItemClick = { position, videoPosition ->

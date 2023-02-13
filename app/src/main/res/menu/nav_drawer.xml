@@ -4,7 +4,7 @@
     tools:showIn= "navigation_view">
     <item
         android:id="@+id/navigation_recently_watched"
-        android:icon="@drawable/icn_recenty"
+        android:icon="@drawable/icn_recently"
         android:title="@string/recently_watched" />
     <item
         android:id="@+id/navigation_watch_later"
@@ -24,15 +24,15 @@
         android:title="@string/terms" />
     <item
         android:id="@+id/navigation_privacy_and_policy"
-        android:icon="@drawable/icn_terms"
+        android:icon="@drawable/icn_privacy"
         android:title="@string/privacy_amp_policy" />
     <item
         android:id="@+id/navigation_disclaimer"
-        android:icon="@drawable/icn_terms"
+        android:icon="@drawable/icn_disclaimer"
         android:title="@string/disclaimer" />
     <item
         android:id="@+id/navigation_refund_and_cancellation"
-        android:icon="@drawable/icn_terms"
+        android:icon="@drawable/icn_refund"
         android:title="@string/refund_amp_cancellation" />
     <item
         android:id="@+id/navigation_shipping_and_delivery"

@@ -10,6 +10,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
@@ -18,14 +19,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.square.acube.databinding.ActivityMainBinding
-import com.square.acube.fragment.BottomAlbumFragment
-import com.square.acube.fragment.BottomHomeFragment
-import com.square.acube.fragment.BottomMoreFragment
-import com.square.acube.fragment.BottomMoviesFragment
+import com.square.acube.fragment.*
 import com.square.acube.model.User.CheckUsers
 import com.square.acube.model.User.Session
 import com.square.acube.model.User.profile
@@ -118,12 +116,14 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         replaceFragment(BottomHomeFragment())
+        enlargeExploreIcon()
         binding.bottomNavView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_home -> replaceFragment(BottomHomeFragment())
                 R.id.nav_movies -> replaceFragment(BottomMoviesFragment())
+                R.id.nav_plus -> replaceFragment(BottomPlusFragment())
                 R.id.nav_clips -> replaceFragment(BottomAlbumFragment())
-                R.id.nav_more -> replaceFragment(BottomMoreFragment())
+                R.id.nav_songs -> replaceFragment(BottomMoreFragment())
             }
             true
         }
@@ -177,6 +177,31 @@ class MainActivity : AppCompatActivity() {
             Uri.parse(url)
         )
         startActivity(viewIntent)
+    }
+
+    private fun enlargeExploreIcon() {
+        val menuView = binding.bottomNavView.getChildAt(0) as BottomNavigationMenuView
+        for (i in 0 until menuView.childCount) {
+            if (i == 1) {
+                val iconView = menuView.getChildAt(i)
+                    .findViewById<View>(com.google.android.material.R.id.navigation_bar_item_icon_view)
+                try {
+                    val layoutParams = iconView.layoutParams
+                    val displayMetrics = resources.displayMetrics
+                    // set your height here
+                    layoutParams.height =
+                        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32f, displayMetrics)
+                            .toInt()
+                    // set your width here
+                    layoutParams.width =
+                        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32f, displayMetrics)
+                            .toInt()
+                    iconView.layoutParams = layoutParams
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
     }
 
     private fun replaceFragment(fragment: Fragment){

@@ -95,10 +95,10 @@ class DetailsActivity : AppCompatActivity() {
                         binding.musicDirecterValue.text = response.video?.musicdireacter
                         binding.dateOfReleaseValue.text = response.video?.dor!!.split(" ")[0]
                         if (!response.video?.certificate.isNullOrEmpty()) {
-                            binding.certificate.text = response.video?.certificate
-                        } else {
+                            binding.certificationValue.text = response.video?.certificate
+                        } /*else {
                             binding.certificate.visibility = View.GONE
-                        }
+                        }*/
                         if (!response.language!!.languageName.isNullOrEmpty()) {
                             binding.languageValue.text = response.language!!.languageName
                         } else {
@@ -109,16 +109,16 @@ class DetailsActivity : AppCompatActivity() {
                         } else {
                             binding.genre.visibility = View.GONE
                         }
-                        if (!response.video?.age.isNullOrEmpty()) {
+                        /*if (!response.video?.age.isNullOrEmpty()) {
                             binding.age.text = response.video?.age
                         } else {
                             binding.age.visibility = View.GONE
-                        }
-                        if (!response.video?.imdb.isNullOrEmpty()) {
+                        }*/
+                        /*if (!response.video?.imdb.isNullOrEmpty()) {
                             binding.imdb.text = response.video?.imdb
                         } else {
                             binding.imdb.visibility = View.GONE
-                        }
+                        }*/
                         Glide.with(this@DetailsActivity).load(getImageUrl(response.video?.image2))
                             .into(binding.mainImage)
                         if (response.video?.relesingsoon == "0") {
@@ -128,14 +128,14 @@ class DetailsActivity : AppCompatActivity() {
                             binding.textComingSoon.visibility = View.VISIBLE
                         }
 
-                        if (response.iswishlist == true) {
+                        /*if (response.iswishlist == true) {
                             binding.removeFavoriteButton.visibility = View.VISIBLE
                             binding.addFavoriteButton.visibility = View.GONE
                         } else {
                             binding.removeFavoriteButton.visibility = View.GONE
                             binding.addFavoriteButton.visibility = View.VISIBLE
                         }
-
+*/
                         val relatedAdapter =
                             RelatedAdapter(applicationContext, response.relatedvideo)
                         relatedAdapter.onItemClick = { Position ->
@@ -242,7 +242,7 @@ class DetailsActivity : AppCompatActivity() {
             i.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.ott.ottapp&hl=en&gl=US")
             startActivity(Intent.createChooser(i, "Share URL"))
         }
-        binding.addFavoriteButton.setOnClickListener {
+        /*binding.addFavoriteButton.setOnClickListener {
             if(!userID.isNullOrEmpty()) {
                 addFavourite("add", "$ID", userID)
                 val snack = Snackbar.make(it, "Add to favourite", Snackbar.LENGTH_LONG)
@@ -258,8 +258,8 @@ class DetailsActivity : AppCompatActivity() {
                 snack.show()
 
             }
-        }
-        binding.removeFavoriteButton.setOnClickListener {
+        }*/
+        /*binding.removeFavoriteButton.setOnClickListener {
             if(!userID.isNullOrEmpty()) {
                 addFavourite("remove", "$ID", userID)
                 val snack = Snackbar.make(it, "Remove from favourite", Snackbar.LENGTH_LONG)
@@ -269,7 +269,7 @@ class DetailsActivity : AppCompatActivity() {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
-        }
+        }*/
     }
 
     private fun addFavourite(method: String, videoid: String, phoneno: String) {
