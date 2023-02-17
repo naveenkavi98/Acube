@@ -7,37 +7,41 @@
     android:background="@color/white"
     tools:context=".SplashActivity">
 
-    <ImageView
-        android:id="@+id/fullscreenContent"
-        android:layout_width="180dp"
-        android:layout_height="200dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/app_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/title"
-        />
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:padding="20dp"
-        android:fontFamily="sans-serif-black"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
         android:gravity="center"
-        android:text="EXCLUSIVE APP FOR ORIGINAL INDIAN MOVIES"
-        android:textColor="@color/black"
-        android:textSize="21sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/fullscreenContent"
+            android:layout_width="180dp"
+            android:layout_height="200dp"
+            android:src="@drawable/app_logo"
+            />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:padding="20dp"
+            android:lineSpacingExtra="5dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="EXCLUSIVE APP FOR ORIGINAL INDIAN MOVIES"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            />
+
+    </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/splash_bg"
+        android:layout_height="250dp"
+        android:src="@drawable/spash_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

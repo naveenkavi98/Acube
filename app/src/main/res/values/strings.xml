@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Acube</string>
+    <string name="app_name">ACube</string>
     <string name="enter">Enter Number</string>
     <string name="enter_your_mobile_number">Enter Your Mobile Number</string>
     <string name="sign_in_sign_up">Sign In/Sign Up</string>
@@ -19,4 +19,5 @@
     <string name="membership">Membership</string>
     <string name="watch_later">Watch Later</string>
     <string name="recently_watched">Recently Watched</string>
+    <string name="logout">Logout</string>
 </resources>

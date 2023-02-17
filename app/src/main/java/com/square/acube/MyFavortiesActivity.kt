@@ -103,7 +103,7 @@ class MyFavortiesActivity : AppCompatActivity() {
                         progressBar.visibility= View.VISIBLE
                         errorImage.visibility= View.INVISIBLE
                         loadTitle.text="Removing"
-                        subTitle.text="Removing from favourite"
+                        subTitle.text="Removing from Watch Later"
                         dialog.show()
                         yesButton.visibility= View.INVISIBLE
                         addFavourite("remove", id!!, userID)

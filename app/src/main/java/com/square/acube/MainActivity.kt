@@ -95,6 +95,7 @@ class MainActivity : AppCompatActivity() {
             menu.findItem(R.id.navigation_recently_watched).isVisible = true
             menu.findItem(R.id.navigation_watch_later).isVisible = true
             menu.findItem(R.id.navigation_membership).isVisible = false
+            menu.findItem(R.id.navigation_logout).isVisible = true
             //getUser("get user", userID!!)
         }
         else {
@@ -103,6 +104,7 @@ class MainActivity : AppCompatActivity() {
             menu.findItem(R.id.navigation_recently_watched).isVisible = false
             menu.findItem(R.id.navigation_watch_later).isVisible = false
             menu.findItem(R.id.navigation_membership).isVisible = false
+            menu.findItem(R.id.navigation_logout).isVisible = false
         }
         /*GlobalScope.launch {
             while (isActive) {
@@ -116,7 +118,6 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         replaceFragment(BottomHomeFragment())
-        enlargeExploreIcon()
         binding.bottomNavView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_home -> replaceFragment(BottomHomeFragment())
@@ -142,22 +143,25 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.navigation_help_and_support -> {
-                    //startIntent("https://starupmediaworld.com/contact.html")
+                    startIntent("https://acubemoviesapp.com/contact.html")
                 }
                 R.id.navigation_terms -> {
-                    //startIntent("https://starupmediaworld.com/terms.html")
+                    startIntent("http://acubemoviesapp.com/terms.html")
                 }
                 R.id.navigation_privacy_and_policy -> {
-                    //startIntent("https://starupmediaworld.com/privacy.html")
+                    startIntent("http://acubemoviesapp.com/privacy-policy.html  ")
                 }
                 R.id.navigation_disclaimer -> {
-                    //startIntent("https://starupmediaworld.com/disclamer.html")
+                    startIntent("http://acubemoviesapp.com/disclaimer.html")
                 }
                 R.id.navigation_refund_and_cancellation -> {
-                    //startIntent("https://starupmediaworld.com/cancel.html")
+                    startIntent("http://acubemoviesapp.com/refund-cancellation.html")
                 }
                 R.id.navigation_shipping_and_delivery -> {
-                    //startIntent("https://starupmediaworld.com/shipping.html")
+                    startIntent("https://acubemoviesapp.com/shipping-delivery.html")
+                }
+                R.id.navigation_logout -> {
+                    logout()
                 }
             }
             true
@@ -233,13 +237,13 @@ class MainActivity : AppCompatActivity() {
                 Log.e("CheckUsers","onResponse:$t")
                 if (!response.lessUser!!){
                     noButton.visibility= View.VISIBLE
-                    title!!.text="Click yes to logout from other devices...!!!"
+                    title.text="Click yes to logout from other devices...!!!"
                     bottomSheetDialog.show()
-                    yesButton!!.setOnClickListener {
+                    yesButton.setOnClickListener {
                         logoutUser(mobileid,"checkuser",userID!!,"logoutlast")
                         bottomSheetDialog.dismiss()
                     }
-                    noButton!!.setOnClickListener {
+                    noButton.setOnClickListener {
                         logout()
                         bottomSheetDialog.dismiss()
                     }
@@ -295,9 +299,9 @@ class MainActivity : AppCompatActivity() {
                 val response= t as Session
                 Log.e("loginOutStatus","$t")
                 if (!response.status!!){
-                    title!!.text="You logout from other...!!!"
+                    title.text="You logout from other...!!!"
                     bottomSheetDialog.show()
-                    yesButton!!.setOnClickListener {
+                    yesButton.setOnClickListener {
                         finish();
                         startActivity(intent);
                         bottomSheetDialog.dismiss()
@@ -354,7 +358,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun forceUpdate(text: String) {
         val headerModel = HeaderModel()
-        RestController(headerModel).forceUpdate(this, "1.1.1", object : ResponseCallback {
+        RestController(headerModel).forceUpdate(this, text, object : ResponseCallback {
             override fun onResponse(t: Any?) {
                 val response = t as ForceUpdateResponse
                 Log.e("onResponseForceUpdate: ", response.toString())

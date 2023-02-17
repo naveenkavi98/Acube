@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
-                android:text="Click Here to Login?"
+                android:text="Login/SignIN"
                 android:textAllCaps="false"
                 android:textStyle="bold"
                 android:textColor="@color/black"

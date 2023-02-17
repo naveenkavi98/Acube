@@ -39,6 +39,11 @@
         android:icon="@drawable/icn_terms"
         android:title="@string/shipping_amp_delivery" />
     <item
+        android:id="@+id/navigation_logout"
+        android:icon="@drawable/icn_logout"
+        android:title="@string/logout" />
+
+    <item
         android:id="@+id/navigation_version"
         android:title="" />
 </menu>

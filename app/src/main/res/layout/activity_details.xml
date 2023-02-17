@@ -71,7 +71,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/mainImage"
-                        app:tint="@color/green" />
+                        />
 
                     <TextView
                         android:id="@+id/textComingSoon"
@@ -128,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="The Plot"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -166,11 +166,23 @@
                         />-->
 
                     <ImageView
-                        android:id="@+id/watch_later"
+                        android:id="@+id/addFavoriteButton"
                         android:layout_width="24dp"
                         android:layout_height="30dp"
                         android:layout_marginEnd="10dp"
                         android:src="@drawable/icn_recently"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/share"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                         />
+
+                    <ImageView
+                        android:id="@+id/removeFavoriteButton"
+                        android:layout_width="24dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/icn_recently"
+                        android:visibility="invisible"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/share"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -201,6 +213,7 @@
                     android:textSize="12sp"
                     android:gravity="center"
                     android:textStyle="bold"
+                    android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cons_plot"
                     />
@@ -212,7 +225,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Cast :"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="11sp"
                     android:textStyle="normal"
@@ -221,15 +234,17 @@
 
                 <TextView
                     android:id="@+id/castValue"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
                     android:fontFamily="sans-serif-medium"
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="11sp"
                     android:textStyle="normal"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/castLabel"
                     app:layout_constraintTop_toBottomOf="@id/film_info" />
                 <TextView
@@ -239,7 +254,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Director"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="11sp"
                     android:textStyle="normal"
@@ -266,7 +281,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Produced By :"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="11sp"
                     android:textStyle="normal"
@@ -293,7 +308,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Certification :"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="11sp"
                     android:textStyle="normal"
@@ -321,7 +336,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
-                    android:text="language :"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="11sp"
                     android:textStyle="normal"
@@ -349,7 +364,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Music :"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="11sp"
                     android:textStyle="normal"
@@ -377,7 +392,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Date Of Release :"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="11sp"
                     android:textStyle="normal"
@@ -402,10 +417,11 @@
                     android:id="@+id/plotValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="10dp"
                     android:fontFamily="sans-serif-medium"
-                    android:lineSpacingExtra="11sp"
+                    android:lineSpacingExtra="5sp"
                     android:textColor="@color/black"
                     android:textSize="13sp"
                     android:textStyle="normal"
@@ -434,6 +450,7 @@
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="normal"
+                    android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/separator" />
 

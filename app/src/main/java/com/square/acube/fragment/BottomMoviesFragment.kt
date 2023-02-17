@@ -95,9 +95,7 @@ class BottomMoviesFragment : Fragment() {
                 val response = t as CategoryResponse
                 Log.e("\n\n\n\n\nonResponse: ", response.toString())
                 val banner =response.banner
-                var sections: ArrayList<Section> = ArrayList();
                 /*val imageList = ArrayList<SlideModel>()
-                sections.addAll(response.section)
                 response.banner.forEach {
                     imageList.add(SlideModel(RestConstants.BANNER_PATH+it.image,  ScaleTypes.CENTER_CROP))
                 }
@@ -123,6 +121,8 @@ class BottomMoviesFragment : Fragment() {
                 }*/
                 binding.viewPager.setPageTransformer(transformer)
 
+                var sections: ArrayList<Section> = ArrayList();
+                sections.addAll(response.section)
                 val sectionsRcv: RecyclerView = binding.sectionsRcv
                 var sectionsAdapter = SectionsAdapter(context, sections)
                 sectionsAdapter.onItemClick = { position, videoPosition ->

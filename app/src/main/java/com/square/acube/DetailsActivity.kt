@@ -86,6 +86,15 @@ class DetailsActivity : AppCompatActivity() {
                         binding.refreshLayout.isRefreshing = false
                         val response = t as VideoDetailsResponse
                         Log.e("onResponse: ", response.toString())
+                        binding.filmInfo.visibility = View.VISIBLE
+                        binding.relatedLabel.visibility = View.VISIBLE
+                        binding.castLabel.text = "Cast :"
+                        binding.directorLabel.text = "Director :"
+                        binding.producedLabel.text = "Produced By :"
+                        binding.certificationLabel.text = "Certification :"
+                        binding.languageLabel.text = "language :"
+                        binding.musicDirecterLabel.text = "Music :"
+                        binding.dateOfReleaseLabel.text = "Date Of Release :"
                         //binding.title.text = response.video?.title
                         binding.plotLabel.text = response.video?.title
                         binding.plotValue.text = response.video?.shortdescription
@@ -128,14 +137,13 @@ class DetailsActivity : AppCompatActivity() {
                             binding.textComingSoon.visibility = View.VISIBLE
                         }
 
-                        /*if (response.iswishlist == true) {
+                        if (response.iswishlist == true) {
                             binding.removeFavoriteButton.visibility = View.VISIBLE
                             binding.addFavoriteButton.visibility = View.GONE
                         } else {
                             binding.removeFavoriteButton.visibility = View.GONE
                             binding.addFavoriteButton.visibility = View.VISIBLE
                         }
-*/
                         val relatedAdapter =
                             RelatedAdapter(applicationContext, response.relatedvideo)
                         relatedAdapter.onItemClick = { Position ->
@@ -242,10 +250,10 @@ class DetailsActivity : AppCompatActivity() {
             i.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.ott.ottapp&hl=en&gl=US")
             startActivity(Intent.createChooser(i, "Share URL"))
         }
-        /*binding.addFavoriteButton.setOnClickListener {
+        binding.addFavoriteButton.setOnClickListener {
             if(!userID.isNullOrEmpty()) {
                 addFavourite("add", "$ID", userID)
-                val snack = Snackbar.make(it, "Add to favourite", Snackbar.LENGTH_LONG)
+                val snack = Snackbar.make(it, "Add to Watch Later", Snackbar.LENGTH_LONG)
                 snack.show()
             }
             else{
@@ -258,18 +266,18 @@ class DetailsActivity : AppCompatActivity() {
                 snack.show()
 
             }
-        }*/
-        /*binding.removeFavoriteButton.setOnClickListener {
+        }
+        binding.removeFavoriteButton.setOnClickListener {
             if(!userID.isNullOrEmpty()) {
                 addFavourite("remove", "$ID", userID)
-                val snack = Snackbar.make(it, "Remove from favourite", Snackbar.LENGTH_LONG)
+                val snack = Snackbar.make(it, "Remove from Watch Later  ", Snackbar.LENGTH_LONG)
                 snack.show()
             }
             else{
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
-        }*/
+        }
     }
 
     private fun addFavourite(method: String, videoid: String, phoneno: String) {

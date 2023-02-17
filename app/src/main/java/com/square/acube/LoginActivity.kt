@@ -256,7 +256,7 @@ class LoginActivity : AppCompatActivity() {
                     //bottomSheetDialog.dismiss()
                     dialog.dismiss()
                     changeAlertType(false)
-                    subTitle.text = "Welcome to StarUp"
+                    subTitle.text = "Welcome to ACube"
                     dialog.show()
                     number = auth.currentUser!!.phoneNumber!!.replace("+", "")
                     Log.e(TAG, "signInWithPhoneAuthCredential: ${auth.currentUser!!.uid}")
