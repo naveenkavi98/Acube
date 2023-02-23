@@ -9,6 +9,7 @@ import com.square.acube.model.favourite.AddFavourite
 import com.square.acube.model.favourite.MyFavourite
 import com.square.acube.model.forceupdate.ForceUpdateResponse
 import com.square.acube.model.plan.CheckUserPlan
+import com.square.acube.model.plan.SubscribeResponse
 import com.square.acube.model.plan.UpgradePlan
 import com.square.acube.model.recentlywatched.AddRecent
 import com.square.acube.model.recentlywatched.Recent
@@ -167,6 +168,13 @@ interface RestProvider {
         @Query("phoneno") phoneno:String,
         @Query("paymentIntents") paymentIntents:String
     ): Call<StripeResponse>
+
+    @GET("subscriber.php/")
+    fun sendPaymentResponse(
+        @Query("phoneno") phoneno:String,
+        @Query("paymentIntents") paymentIntents:String,
+        @Query("video_id") video_id:String
+    ): Call<SubscribeResponse>
 
     @GET("updateProfile.php")
     fun deleteAccount(

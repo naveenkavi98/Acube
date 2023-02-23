@@ -12,6 +12,7 @@ import com.square.acube.model.favourite.AddFavourite
 import com.square.acube.model.favourite.MyFavourite
 import com.square.acube.model.forceupdate.ForceUpdateResponse
 import com.square.acube.model.plan.CheckUserPlan
+import com.square.acube.model.plan.SubscribeResponse
 import com.square.acube.model.plan.UpgradePlan
 import com.square.acube.model.recentlywatched.AddRecent
 import com.square.acube.model.recentlywatched.Recent
@@ -687,6 +688,36 @@ class RestController @Throws(Exception::class) constructor(headerModel: HeaderMo
             }
 
             override fun onFailure(call: Call<StripeResponse?>, t: Throwable) {
+                Log.e("BODY Fail", call.toString())
+                if (!CommonUtils.isNetworkAvailable(context)) {
+                    responseCallback.onNetworkFailure()
+                } else {
+                    responseCallback.onFailure(t)
+                }
+                handleFailure(t)
+            }
+        },)
+    }
+
+    fun sendPaymentResponse(context: Context?, responseCallback: ResponseCallback, phoneno:String, paymentIntents:String, video_id:String) {
+        val call: Call<SubscribeResponse>? = mRestServiceProvider?.sendPaymentResponse(phoneno,paymentIntents,video_id)
+        call?.enqueue(object : Callback<SubscribeResponse?> {
+            override fun onResponse(
+                call: Call<SubscribeResponse?>,
+                response: Response<SubscribeResponse?>
+            ) {
+                Log.e("SubscribeResponse", response.toString())
+                when (response.code()) {
+                    200 -> try {
+                        responseCallback.onResponse(response.body())
+                    } catch (e: java.lang.Exception) {
+                        handleErrorBody(response, responseCallback)
+                    }
+                    else -> handleErrorBody(response, responseCallback)
+                }
+            }
+
+            override fun onFailure(call: Call<SubscribeResponse?>, t: Throwable) {
                 Log.e("BODY Fail", call.toString())
                 if (!CommonUtils.isNetworkAvailable(context)) {
                     responseCallback.onNetworkFailure()

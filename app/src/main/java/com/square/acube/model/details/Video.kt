@@ -26,6 +26,8 @@ data class Video (
   @SerializedName("status"           ) var status           : String? = null,
   @SerializedName("plans"            ) var plans            : String? = null,
   @SerializedName("imdb"             ) var imdb             : String? = null,
-  @SerializedName("age"              ) var age              : String? = null
+  @SerializedName("age"              ) var age              : String? = null,
+  @SerializedName("amount"           ) var amount           : Int? = null,
+  @SerializedName("expirdate"   ) var expirdate   : String? = null
 
 )

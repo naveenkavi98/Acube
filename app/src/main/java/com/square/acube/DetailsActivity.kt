@@ -13,25 +13,34 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import com.razorpay.Checkout
+import com.razorpay.PaymentResultListener
 import com.square.acube.adapter.RelatedAdapter
 import com.square.acube.databinding.ActivityDetailsBinding
 import com.square.acube.model.details.VideoDetailsResponse
 import com.square.acube.model.favourite.AddFavourite
+import com.square.acube.model.plan.SubscribeResponse
 import com.square.acube.model.recentlywatched.AddRecent
 import com.square.acube.network.HeaderModel
 import com.square.acube.network.ResponseCallback
 import com.square.acube.network.RestController
 import com.square.acube.utils.CommonUtils.Companion.getImageUrl
 import com.square.acube.utils.Constants
+import org.json.JSONException
+import org.json.JSONObject
+import kotlin.math.roundToInt
 
-class DetailsActivity : AppCompatActivity() {
+class DetailsActivity : AppCompatActivity(), PaymentResultListener {
 
     private var ID: String? = ""
     private var SEARCH: String? = ""
     private var URL: String? = null
     private var userID: String = ""
+    var keyId :String?=null
+    var amount = 0
     private lateinit var dialog: Dialog
     private lateinit var subTitle: TextView
     private lateinit var loadTitle: TextView
@@ -48,6 +57,7 @@ class DetailsActivity : AppCompatActivity() {
         val sharedPreferences: SharedPreferences =
             this.getSharedPreferences("TOKEN_KEY", Context.MODE_PRIVATE)
         userID = sharedPreferences.getString("TOKEN_KEY", "").toString()
+        keyId= sharedPreferences.getString("RazKey", "").toString()
 
         ID = intent.getStringExtra(Constants.ID)
         SEARCH = intent.getStringExtra(Constants.SEARCH)
@@ -95,6 +105,7 @@ class DetailsActivity : AppCompatActivity() {
                         binding.languageLabel.text = "language :"
                         binding.musicDirecterLabel.text = "Music :"
                         binding.dateOfReleaseLabel.text = "Date Of Release :"
+                        binding.dateOfExpiryLabel.text = "Expires on :"
                         //binding.title.text = response.video?.title
                         binding.plotLabel.text = response.video?.title
                         binding.plotValue.text = response.video?.shortdescription
@@ -103,6 +114,7 @@ class DetailsActivity : AppCompatActivity() {
                         binding.castValue.text = response.video?.cast
                         binding.musicDirecterValue.text = response.video?.musicdireacter
                         binding.dateOfReleaseValue.text = response.video?.dor!!.split(" ")[0]
+                        binding.dateOfRExpiryValue.text = response.video?.expirdate
                         if (!response.video?.certificate.isNullOrEmpty()) {
                             binding.certificationValue.text = response.video?.certificate
                         } /*else {
@@ -130,11 +142,23 @@ class DetailsActivity : AppCompatActivity() {
                         }*/
                         Glide.with(this@DetailsActivity).load(getImageUrl(response.video?.image2))
                             .into(binding.mainImage)
-                        if (response.video?.relesingsoon == "0") {
+                        if (response.video?.embed_url!= null) {
                             URL = response.video?.embed_url
+                            if (response.video?.freepaid.equals("1")) {
+                                binding.dateOfExpiryLabel.visibility = View.VISIBLE
+                                binding.dateOfRExpiryValue.visibility = View.VISIBLE
+                            }
+                            else {
+                                binding.dateOfExpiryLabel.visibility = View.GONE
+                                binding.dateOfRExpiryValue.visibility = View.GONE
+                            }
                         } else {
+                            amount = response.video?.amount!!
+                            binding.textComingSoon.text = " Watch now @ Just Rs.$amount/- "
                             binding.play.visibility = View.GONE
                             binding.textComingSoon.visibility = View.VISIBLE
+                            binding.dateOfExpiryLabel.visibility = View.GONE
+                            binding.dateOfRExpiryValue.visibility = View.GONE
                         }
 
                         if (response.iswishlist == true) {
@@ -278,6 +302,33 @@ class DetailsActivity : AppCompatActivity() {
                 finish()
             }
         }
+        binding.textComingSoon.setOnClickListener {
+            if(!userID.isNullOrEmpty()) {
+                Toast.makeText(applicationContext, "$keyId", Toast.LENGTH_SHORT).show()
+                val amount = (amount.toFloat() * 100).roundToInt()
+                val checkout = Checkout()
+                checkout.setKeyID(keyId)
+                //checkout.setImage(R.drawable.app_logo)
+                val `object` = JSONObject()
+                try {
+                    `object`.put("name", "Acube")
+                    `object`.put("description", "Payment")
+                    //`object`.put("theme.color", "")
+                    //`object`.put("currency", "INR")
+                    `object`.put("amount", amount)
+                    `object`.put("prefill.contact", userID)
+                    //`object`.put("prefill.email", "chaitanyamunje@gmail.com")
+                    checkout.open(this, `object`)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            }
+            else{
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+        }
     }
 
     private fun addFavourite(method: String, videoid: String, phoneno: String) {
@@ -328,6 +379,39 @@ class DetailsActivity : AppCompatActivity() {
 
 
         }, method, videoid, phoneno)
+    }
+
+    private fun sendPaymentResponse(phoneno:String, paymentIntents:String, video_id:String) {
+        val headerModel = HeaderModel()
+        RestController(headerModel).sendPaymentResponse(this, object : ResponseCallback {
+            override fun onResponse(t: Any?) {
+                val response = t as SubscribeResponse
+                Log.e("SubscribeResponse", "$response")
+                getDetails(SEARCH.toString())
+                //progressDialog.dismiss()
+            }
+
+            override fun onFailure(t: Any?) {
+                getDetails(SEARCH.toString())
+                Log.e("onFailure: ", t.toString())
+            }
+
+            override fun onNetworkFailure() {
+
+            }
+
+
+        }, phoneno, paymentIntents, video_id)
+
+    }
+
+    override fun onPaymentSuccess(p0: String?) {
+        Log.e( "onPaymentSuccess: ","$p0" )
+        sendPaymentResponse(userID, p0!!, ID!!)
+    }
+
+    override fun onPaymentError(p0: Int, p1: String?) {
+        Log.e( "onPaymentSuccess: ","$p0/$p1" )
     }
 
 }
